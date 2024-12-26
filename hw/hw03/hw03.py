@@ -22,7 +22,22 @@ def num_eights(pos):
     ...       ['Assign', 'AnnAssign', 'AugAssign', 'NamedExpr'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    if pos == 0:
+        return 0
+    return (1 if pos % 10 == 8 else 0) + num_eights(pos // 10)
+
+def h1(i, n):
+    if n == 1:
+        return i
+    if num_eights(n) > 0 or n % 8 == 0:
+        i += 1
+    return h1(i, n - 1)
+def h2(d, n):
+    if n == 1:
+        return d
+    if num_eights(n) > 0 or n % 8 == 0:
+        d = -d
+    return d + h2(d, n - 1)
 
 
 def pingpong(n):
@@ -58,7 +73,7 @@ def pingpong(n):
     ...       ['Assign', 'AnnAssign', 'AugAssign', 'NamedExpr'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    return h2(-1 ** h1(0, n), n)
 
 
 def get_larger_coin(coin):
@@ -96,6 +111,15 @@ def get_smaller_coin(coin):
     elif coin == 5:
         return 1
 
+def coins_partition(n, m): 
+    if n == 0:
+        return 1
+    elif n < 0:
+        return 0
+    elif m == 1:
+        return 1
+    else:
+        return coins_partition(n - m, m) + coins_partition(n, get_smaller_coin(m))
 
 def count_coins(change):
     """Return the number of ways to make change using coins of value of 1, 5, 10, 25.
@@ -114,4 +138,4 @@ def count_coins(change):
     >>> check(HW_SOURCE_FILE, 'count_coins', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    return coins_partition(change, 25) 
