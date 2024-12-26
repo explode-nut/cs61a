@@ -1,7 +1,10 @@
 # cs61a
 ## lab
-- lab02
-- lab04
+- lab02✅
+- lab04✅
+- lab05
+- lab06
 ## hw
-- hw02
-- hw03
+- hw02✅
+- hw03✅
+- hw04
