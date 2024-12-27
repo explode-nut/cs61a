@@ -17,7 +17,13 @@ def flatten(s):
     >>> x
     [[1, [1, 1]], 1, [1, 1]]
     """
-    "*** YOUR CODE HERE ***"
+    r = []
+    for i in s:
+        if type(i) != list:
+            r.append(i)
+        else:
+            r.extend(flatten(i))
+    return r
 
 
 def couple(s, t):
@@ -33,7 +39,11 @@ def couple(s, t):
     [['c', 's'], [6, '1']]
     """
     assert len(s) == len(t)
-    "*** YOUR CODE HERE ***"
+    r = []
+    for i in range(len(s)):
+        r.append([s[i], t[i]])
+    return r
+
 
 
 def insert_items(lst, entry, elem):
@@ -62,7 +72,15 @@ def insert_items(lst, entry, elem):
     ...       ['List', 'ListComp', 'Slice'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    i = 0
+    while i < len(lst):
+        if lst[i] == entry:
+            lst.insert(i + 1, elem)
+            if entry == elem:
+                i += 1
+        i += 1
+    return lst
+
 
 
 def change_abstraction(change):
