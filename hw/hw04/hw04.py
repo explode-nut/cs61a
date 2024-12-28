@@ -10,7 +10,12 @@ def merge(lst1, lst2):
     >>> merge([5, 7], [2, 4, 6])
     [2, 4, 5, 6, 7]
     """
-    "*** YOUR CODE HERE ***"
+    if len(lst1) == 0 or len(lst2) == 0:
+        return lst1 + lst2
+    if lst1[0] < lst2[0]:
+        return [lst1[0]] + merge(lst1[1:], lst2)
+    else:
+        return [lst2[0]] + merge(lst1, lst2[1:])
 
 
 class Mint:
@@ -48,10 +53,13 @@ class Mint:
         self.update()
 
     def create(self, coin):
-        "*** YOUR CODE HERE ***"
+        if coin == Nickel:
+            return Nickel(self.year)
+        elif coin == Dime:
+            return Dime(self.year)
 
     def update(self):
-        "*** YOUR CODE HERE ***"
+        self.year = Mint.present_year        
 
 
 class Coin:
@@ -61,7 +69,10 @@ class Coin:
         self.year = year
 
     def worth(self):
-        "*** YOUR CODE HERE ***"
+        if Mint.present_year - self.year < 50:
+            return self.cents
+        else:
+            return self.cents + (Mint.present_year - self.year - 50)
 
 
 class Nickel(Coin):
@@ -109,4 +120,32 @@ class VendingMachine:
     >>> w.vend()
     'Here is your soda.'
     """
-    "*** YOUR CODE HERE ***"
+    stock = 0
+    funds = 0
+    def __init__(self, name, price):
+        self.name = name
+        self.price = price
+
+    def vend(self):
+        if self.stock == 0:
+            return 'Nothing left to vend. Please restock.'
+        if self.funds < self.price:
+            return f'You must add ${self.price - self.funds} more funds.'
+        elif self.funds == self.price:
+            self.stock -= 1
+            self.funds = 0
+            return f'Here is your {self.name}.'
+        else:
+            self.stock -= 1
+            t = self.funds
+            self.funds = 0
+            return f'Here is your {self.name} and ${t - self.price} change.'
+    def add_funds(self, fund):
+        if self.stock == 0:
+            return f'Nothing left to vend. Please restock. Here is your ${fund}.'
+        self.funds += fund
+        return f'Current balance: ${self.funds}'
+    def restock(self, amount):
+        self.stock += amount
+        return f'Current {self.name} stock: {self.stock}'
+
