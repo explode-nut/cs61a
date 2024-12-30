@@ -42,7 +42,18 @@ def has_path(t, term):
     False
     """
     assert len(term) > 0, 'no path for empty term.'
-    "*** YOUR CODE HERE ***"
+    if t.label != term[0]:
+        return False
+    for c in term[1:]:
+        flag = False
+        for i in t.branches:
+            if i.label == c:
+                t = i
+                flag = True
+                break
+        if not flag:
+            return False
+    return True
 
 
 def duplicate_link(lnk, val):
@@ -60,7 +71,13 @@ def duplicate_link(lnk, val):
     >>> y
     Link(2, Link(4, Link(6, Link(8))))
     """
-    "*** YOUR CODE HERE ***"
+    n = lnk
+    while n is not Link.empty:
+        if n.first == val:
+            n.rest = Link(val, n.rest)
+            n = n.rest
+        n = n.rest
+    
 
 
 def deep_map_mut(fn, lnk):
@@ -80,7 +97,13 @@ def deep_map_mut(fn, lnk):
     >>> print(link1)
     <9 <16> 25 36>
     """
-    "*** YOUR CODE HERE ***"
+    n = lnk
+    while n is not Link.empty:
+        if isinstance(n.first, Link):
+            deep_map_mut(fn, n.first)
+        else:
+            n.first = fn(n.first)
+        n = n.rest
 
 
 class Tree:
