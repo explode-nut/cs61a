@@ -2,9 +2,14 @@
 ## lab
 - lab02✅
 - lab04✅
-- lab05
-- lab06
+- lab05✅
+- lab06✅
+- lab07✅
+- lab10✅
+- lab11
 ## hw
 - hw02✅
 - hw03✅
-- hw04
+- hw04✅
+- hw05✅
+- hw06
