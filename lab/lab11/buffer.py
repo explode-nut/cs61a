@@ -116,7 +116,7 @@ class Buffer:
         try:
             self.current = next(self.source)
         except StopIteration:
-            pass
+            return None
         return r
         # END
 
