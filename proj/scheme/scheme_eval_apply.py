@@ -34,16 +34,21 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
         return scheme_forms.SPECIAL_FORMS[first](rest, env)
     else:
         # BEGIN PROBLEM 3
-        "*** YOUR CODE HERE ***"
+        if isinstance(first, Pair):
+            p = scheme_apply(env.lookup(first.first), first.rest.map(lambda exp, en=env: scheme_eval(exp, en)), env)
+        else:
+            p = env.lookup(first)
+        validate_procedure(p)
+        args = rest.map(lambda exp, en=env: scheme_eval(exp, en))
+        t = args
+        num = 0
+        while t is not nil:
+            validate_type(t, lambda x : isinstance(x, Pair), num, 'args')
+            num += 1
+            t = t.rest
+        return scheme_apply(p, args, env)
         # END PROBLEM 3
 
-def h1(l, n):
-    while n is not nil:
-        if isinstance(n.first, Pair):
-            h1(l, n.first)
-        else:
-            l.append(n.first)
-            n = n.rest
 
 def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS (a Scheme list) in
@@ -53,7 +58,9 @@ def scheme_apply(procedure, args, env):
         # BEGIN PROBLEM 2
         node = args
         a = []
-        h1(a, node)
+        while node is not nil:
+            a.append(node.first)
+            node = node.rest
         if procedure.expect_env:
             a.append(env)
         try:
