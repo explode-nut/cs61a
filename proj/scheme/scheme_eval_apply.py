@@ -37,6 +37,13 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
         "*** YOUR CODE HERE ***"
         # END PROBLEM 3
 
+def h1(l, n):
+    while n is not nil:
+        if isinstance(n.first, Pair):
+            h1(l, n.first)
+        else:
+            l.append(n.first)
+            n = n.rest
 
 def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS (a Scheme list) in
@@ -44,7 +51,16 @@ def scheme_apply(procedure, args, env):
     validate_procedure(procedure)
     if isinstance(procedure, BuiltinProcedure):
         # BEGIN PROBLEM 2
-        "*** YOUR CODE HERE ***"
+        node = args
+        a = []
+        h1(a, node)
+        if procedure.expect_env:
+            a.append(env)
+        try:
+            r = procedure.py_func(*a)
+            return r
+        except TypeError:
+            raise SchemeError('incorrect number of arguments')
         # END PROBLEM 2
     elif isinstance(procedure, LambdaProcedure):
         # BEGIN PROBLEM 9
