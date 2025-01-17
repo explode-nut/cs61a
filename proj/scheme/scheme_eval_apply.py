@@ -40,12 +40,6 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
             p = env.lookup(first)
         validate_procedure(p)
         args = rest.map(lambda exp, en=env: scheme_eval(exp, en))
-        t = args
-        num = 0
-        while t is not nil:
-            validate_type(t, lambda x : isinstance(x, Pair), num, 'args')
-            num += 1
-            t = t.rest
         return scheme_apply(p, args, env)
         # END PROBLEM 3
 
