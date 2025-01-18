@@ -55,7 +55,14 @@ class Frame:
         if len(formals) != len(vals):
             raise SchemeError('Incorrect number of arguments to function call')
         # BEGIN PROBLEM 8
-        "*** YOUR CODE HERE ***"
+        child = Frame(parent = self)
+        node1 = formals
+        node2 = vals
+        while node1 is not nil:
+            child.define(node1.first, node2.first)
+            node1 = node1.rest
+            node2 = node2.rest
+        return child
         # END PROBLEM 8
 
 ##############
