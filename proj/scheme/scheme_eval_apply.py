@@ -35,12 +35,18 @@ def scheme_eval(expr, env, _=None):  # Optional third argument is ignored
     else:
         # BEGIN PROBLEM 3
         if isinstance(first, Pair):
+            print('DEBUG:', first)
             p = scheme_eval(first, env)
+            print('DEBUG:', 1111)
         else:
+            # print('DEBUG:', first)
             p = env.lookup(first)
         validate_procedure(p)
         args = rest.map(lambda exp, en=env: scheme_eval(exp, en))
-        return scheme_apply(p, args, env)
+        print('DEBUG:', p)
+        print('DEBUG:', args)
+        print('DEBUG:', env)
+        return scheme_apply(p, args, env if isinstance(p, BuiltinProcedure) else p.env)
         # END PROBLEM 3
 
 
@@ -65,7 +71,8 @@ def scheme_apply(procedure, args, env):
         # END PROBLEM 2
     elif isinstance(procedure, LambdaProcedure):
         # BEGIN PROBLEM 9
-        "*** YOUR CODE HERE ***"
+        child = env.make_child_frame(procedure.formals, args)
+        return eval_all(procedure.body, child)
         # END PROBLEM 9
     elif isinstance(procedure, MuProcedure):
         # BEGIN PROBLEM 11
