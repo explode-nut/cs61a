@@ -6,10 +6,13 @@
 - lab06✅
 - lab07✅
 - lab10✅
-- lab11
+- lab11✅
 ## hw
 - hw02✅
 - hw03✅
 - hw04✅
 - hw05✅
-- hw06
+- hw06✅
+
+## proj
+- scheme✅
