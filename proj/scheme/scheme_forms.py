@@ -124,7 +124,15 @@ def do_and_form(expressions, env):
     False
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    node = expressions
+    p = True
+    while node is not nil:
+        r = scheme_eval(node.first, env)
+        p = r
+        if is_scheme_false(r):
+            return False
+        node = node.rest
+    return p
     # END PROBLEM 12
 
 
@@ -143,7 +151,13 @@ def do_or_form(expressions, env):
     6
     """
     # BEGIN PROBLEM 12
-    "*** YOUR CODE HERE ***"
+    node = expressions
+    while node is not nil:
+        r = scheme_eval(node.first, env)
+        if is_scheme_true(r):
+            return r
+        node = node.rest
+    return False
     # END PROBLEM 12
 
 
@@ -164,7 +178,7 @@ def do_cond_form(expressions, env):
             test = scheme_eval(clause.first, env)
         if is_scheme_true(test):
             # BEGIN PROBLEM 13
-            "*** YOUR CODE HERE ***"
+            return test if clause.rest is nil else eval_all(clause.rest, env)
             # END PROBLEM 13
         expressions = expressions.rest
 
@@ -178,6 +192,7 @@ def do_let_form(expressions, env):
     """
     validate_form(expressions, 2)
     let_env = make_let_frame(expressions.first, env)
+    print('DEBUG:', 111)
     return eval_all(expressions.rest, let_env)
 
 
@@ -190,8 +205,15 @@ def make_let_frame(bindings, env):
         raise SchemeError('bad bindings list in let form')
     names = vals = nil
     # BEGIN PROBLEM 14
-    "*** YOUR CODE HERE ***"
+    node = bindings
+    while node is not nil:
+        validate_form(node.first, 2, 2)
+        names = Pair(node.first.first, names)
+        vals = Pair(scheme_eval(node.first.rest.first, env), vals)
+        node = node.rest
+    validate_formals(names)
     # END PROBLEM 14
+    print('DEBUG:', names, vals)
     return env.make_child_frame(names, vals)
 
 

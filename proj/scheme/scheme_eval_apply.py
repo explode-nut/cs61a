@@ -97,6 +97,7 @@ def eval_all(expressions, env):
     node = expressions
     r = None
     while node is not nil:
+        print('DEBUG:', node.first)
         r = scheme_eval(node.first, env)
         node = node.rest
     return r
